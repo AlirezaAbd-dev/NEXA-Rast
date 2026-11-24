@@ -28,7 +28,26 @@
 
 ## Quick Start
 
-### Fastest Install (Any OS with Go 1.22+)
+### Option A: Prebuilt Releases (No Go Required)
+
+Download the latest release for your OS from [GitHub Releases](https://github.com/AlirezaAbd-dev/NEXA-Rast/releases):
+
+- **Ubuntu / Debian (`.deb`)**:
+  ```bash
+  sudo dpkg -i nexa-rast_*_amd64.deb
+  nexa-rast install
+  ```
+- **macOS (Apple Silicon `arm64` / Intel `amd64`)**:
+  ```bash
+  tar -xzf nexa-rast_*_darwin_arm64.tar.gz
+  chmod +x nexa-rast
+  ./nexa-rast install
+  open -a Antigravity --args --remote-debugging-port=9222
+  ```
+- **Windows (`.zip` with `nexa-rast.exe`)**:
+  Extract the `.zip`, open PowerShell in that folder, and run `.\nexa-rast.exe install` (then add `--remote-debugging-port=9222` to your Antigravity shortcut).
+
+### Option B: Install via Go (Any OS with Go 1.22+)
 
 ```bash
 go install github.com/AlirezaAbd-dev/NEXA-Rast/cmd/nexa-rast@latest

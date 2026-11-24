@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Run tests
+        run: go test -race ./...
+
+      - name: Build cross-platform archives and .deb packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          mkdir -p dist
+
+          build_tar() {
+            local os="$1" arch="$2"
+            local stage="dist/stage-${os}-${arch}"
+            mkdir -p "${stage}"
+            GOOS="${os}" GOARCH="${arch}" CGO_ENABLED=0 \
+              go build -trimpath -ldflags="-s -w" -o "${stage}/nexa-rast" ./cmd/nexa-rast
+            cp README.md LICENSE "${stage}/"
+            tar -C "${stage}" -czf "dist/nexa-rast_${VERSION}_${os}_${arch}.tar.gz" .
+            rm -rf "${stage}"
+          }
+
+          build_zip() {
+            local os="$1" arch="$2"
+            local stage="dist/stage-${os}-${arch}"
+            mkdir -p "${stage}"
+            GOOS="${os}" GOARCH="${arch}" CGO_ENABLED=0 \
+              go build -trimpath -ldflags="-s -w" -o "${stage}/nexa-rast.exe" ./cmd/nexa-rast
+            cp README.md LICENSE "${stage}/"
+            (cd "${stage}" && zip -rq "../nexa-rast_${VERSION}_${os}_${arch}.zip" .)
+            rm -rf "${stage}"
+          }
+
+          build_deb() {
+            local goarch="$1" debarch="$2"
+            local pkg="dist/deb-${debarch}"
+            mkdir -p "${pkg}/DEBIAN" "${pkg}/usr/local/bin"
+            GOOS=linux GOARCH="${goarch}" CGO_ENABLED=0 \
+              go build -trimpath -ldflags="-s -w" -o "${pkg}/usr/local/bin/nexa-rast" ./cmd/nexa-rast
+            chmod 0755 "${pkg}/usr/local/bin/nexa-rast"
+            cat > "${pkg}/DEBIAN/control" <<EOF
+          Package: nexa-rast
+          Version: ${VERSION}
+          Section: utils
+          Priority: optional
+          Architecture: ${debarch}
+          Maintainer: AlirezaAbd-dev <https://github.com/AlirezaAbd-dev/NEXA-Rast>
+          Description: RTL (Persian, Arabic, Hebrew) chat fix for Antigravity 2.0
+           Injects a CSS-first RTL engine into Antigravity 2.0 chat over CDP.
+          EOF
+            dpkg-deb --build --root-owner-group "${pkg}" "dist/nexa-rast_${VERSION}_${debarch}.deb"
+            rm -rf "${pkg}"
+          }
+
+          build_tar linux amd64
+          build_tar linux arm64
+          build_tar darwin amd64
+          build_tar darwin arm64
+          build_zip windows amd64
+          build_zip windows arm64
+          build_deb amd64 amd64
+          build_deb arm64 arm64
+
+          (cd dist && sha256sum * > checksums.txt)
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: dist/*

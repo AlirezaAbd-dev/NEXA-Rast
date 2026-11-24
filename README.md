@@ -4,6 +4,8 @@
 
 `nexa-rast` (*Rast* = راست / "right" in Persian) is an open-source **Antigravity 2.0** plugin and lightweight **Go** sidecar. It injects a CSS-first RTL engine into the Antigravity 2.0 chat over Chrome DevTools Protocol (CDP) without modifying `app.asar`, breaking app signatures, or slowing down token streaming.
 
+![NEXA Rast UI Showcase](assets/showcase.jpg)
+
 ---
 
 ## Features

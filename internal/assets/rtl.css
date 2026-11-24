@@ -1,0 +1,57 @@
+/* nexa-rast: CSS-first RTL engine for Antigravity 2.0 */
+
+/* Auto-detect paragraph and block direction from first strong character */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+blockquote,
+td,
+th,
+dt,
+dd,
+figcaption,
+textarea,
+[contenteditable="true"] {
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+/* Logical alignment for RTL lists and blockquotes */
+li:dir(rtl) {
+  text-align: start;
+}
+
+ul:has(> li:dir(rtl)),
+ol:has(> li:dir(rtl)) {
+  padding-inline-start: 1.5em;
+  padding-left: 0;
+}
+
+blockquote:dir(rtl) {
+  border-inline-start: 3px solid currentColor;
+  border-left: none;
+  padding-inline-start: 1em;
+  padding-left: 0;
+}
+
+/* Keep code blocks, inline code, and editors strictly LTR */
+pre,
+pre code,
+kbd,
+samp,
+.monaco-editor {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: left !important;
+}
+
+/* Isolate inline code inside RTL sentences without breaking flow */
+:not(pre) > code {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

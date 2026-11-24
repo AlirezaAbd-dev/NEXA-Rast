@@ -1,0 +1,7 @@
+{
+  "name": "nexa-rast",
+  "displayName": "NEXA Rast",
+  "version": "0.1.0",
+  "description": "Fixes RTL (Persian, Arabic, Hebrew) rendering and code-block LTR isolation in Antigravity 2.0 chat.",
+  "repository": "https://github.com/AlirezaAbd-dev/NEXA-Rast"
+}

@@ -1,0 +1,7 @@
+{
+  "display_name": "NEXA Rast RTL Injector",
+  "description": "Injects CSS-first RTL support into Antigravity 2.0 chat windows over CDP.",
+  "command": "nexa-rast",
+  "args": ["sidecar", "--port", "9222"],
+  "restart_policy": "on-failure"
+}

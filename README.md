@@ -28,6 +28,15 @@
 
 ## Quick Start
 
+### Fastest Install (Any OS with Go 1.22+)
+
+```bash
+go install github.com/AlirezaAbd-dev/NEXA-Rast/cmd/nexa-rast@latest
+nexa-rast install
+```
+
+*(Ensure `$(go env GOPATH)/bin` is in your `PATH`.)*
+
 ### Prerequisites
 
 - **Antigravity 2.0**

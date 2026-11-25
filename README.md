@@ -1,6 +1,6 @@
 # NEXA Rast (`nexa-rast`)
 
-**Fix RTL (Persian, Arabic, Hebrew) rendering in Antigravity 2.0 chat — fast, native, and non-destructive.**
+**Fix RTL (Persian & Arabic) rendering in Antigravity 2.0 chat — fast, native, and non-destructive.**
 
 `nexa-rast` (*Rast* = راست / "right" in Persian) is an open-source **Antigravity 2.0** plugin and lightweight **Go** sidecar. It injects a CSS-first RTL engine into the Antigravity 2.0 chat over Chrome DevTools Protocol (CDP) without modifying `app.asar`, breaking app signatures, or slowing down token streaming.
 
@@ -12,7 +12,7 @@
 
 - **Automatic Per-Paragraph Direction**: Detects RTL vs. LTR from the first strong character (`unicode-bidi: plaintext`, `text-align: start`, `dir="auto"`).
 - **Strict Code Isolation**: Keeps code blocks (`pre`, `code`), inline code, and `.monaco-editor` strictly LTR (`direction: ltr`).
-- **Composer Input Support**: Typing Persian, Arabic, or Hebrew in the chat input aligns right immediately.
+- **Composer Input Support**: Typing Persian or Arabic in the chat input aligns right immediately.
 - **Zero-Lag Streaming**: CSS-first layout paired with a `requestAnimationFrame`-batched `MutationObserver`.
 - **Safe & Reversible**: Works on read-only Linux Snap installs, survives Antigravity auto-updates, and uninstalls cleanly.
 
@@ -52,7 +52,7 @@ Download the latest release for your OS from [GitHub Releases](https://github.co
 ### Option B: Install via Go (Any OS with Go 1.22+)
 
 ```bash
-go install github.com/AlirezaAbd-dev/NEXA-Rast/cmd/nexa-rast@latest
+go install [github.com/AlirezaAbd-dev/NEXA-Rast/cmd/nexa-rast@latest](https://github.com/AlirezaAbd-dev/NEXA-Rast/cmd/nexa-rast@latest)
 nexa-rast install
 ```
 
@@ -68,7 +68,7 @@ nexa-rast install
 ### 1. Linux
 
 ```bash
-git clone https://github.com/AlirezaAbd-dev/NEXA-Rast.git
+git clone [https://github.com/AlirezaAbd-dev/NEXA-Rast.git](https://github.com/AlirezaAbd-dev/NEXA-Rast.git)
 cd NEXA-Rast
 ./scripts/install.sh
 ```
@@ -80,7 +80,7 @@ Then **fully quit and reopen Antigravity 2.0** from your application launcher.
 ### 2. macOS
 
 ```bash
-git clone https://github.com/AlirezaAbd-dev/NEXA-Rast.git
+git clone [https://github.com/AlirezaAbd-dev/NEXA-Rast.git](https://github.com/AlirezaAbd-dev/NEXA-Rast.git)
 cd NEXA-Rast
 ./scripts/install.sh
 ```
@@ -101,7 +101,7 @@ open -a Antigravity --args --remote-debugging-port=9222
 ### 3. Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/AlirezaAbd-dev/NEXA-Rast.git
+git clone [https://github.com/AlirezaAbd-dev/NEXA-Rast.git](https://github.com/AlirezaAbd-dev/NEXA-Rast.git)
 cd NEXA-Rast
 go build -trimpath -ldflags="-s -w" -o nexa-rast.exe .\cmd\nexa-rast
 .\nexa-rast.exe install
@@ -158,7 +158,7 @@ Antigravity 2.0 (--remote-debugging-port=9222)
    │
    ├── starts sidecar ──▶ nexa-rast sidecar
    │                         │
-   │                         ├── polls http://127.0.0.1:9222/json
+   │                         ├── polls [http://127.0.0.1:9222/json](http://127.0.0.1:9222/json)
    │                         └── injects rtl.css + rtl.js via CDP WebSocket
    │
    └── Chat Canvas DOM ──▶ CSS unicode-bidi: plaintext + dir="auto" (code stays LTR)
